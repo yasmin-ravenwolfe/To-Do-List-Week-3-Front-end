@@ -1,0 +1,102 @@
+<html>
+<head>
+	<style type="text/css">
+   /* #templates { display: none;}
+    #to-do-list .to-do-list {
+      background: #ddd;
+      float:left;
+      padding: 1px 10px;
+      margin-bottom: 10px;
+    }*/
+    </style>
+</head>
+
+<body>
+	<label id = "tasks">Tasks: </label>
+	<input id = "task-input" type="text"></input>
+
+  <label id = "complete"> Complete? </label>
+  <input id = "complete-input" type = "text"></input>
+
+	<input id = "submit-button" type="button" value="Submit"/>
+
+
+
+	<h1> To Do: </h1>
+
+	<div id="to-do-list">
+   
+  </div>
+
+  <!-- Template set up -->
+	<div id="templates">
+		<script class="to-do-list" type="text/template">
+      <div class="task">
+        <p>
+          <%=name%> is  <%=complete%>.
+          <input class = "checkbox" type = "checkbox"/> 
+       </p>
+      </div>
+		</script>
+  </div>
+
+  <!-- JS imports -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  
+  <!-- JS Template -->
+  <script type= "text/javascript">
+    var taskTemplateHtml = $('#templates .to-do-list').html();
+    var taskTemplate = _.template(taskTemplateHtml);
+
+    var tasks = [
+      {
+        name: 'Create TODO list',
+        complete: false
+      },
+      {
+        name: 'Implement Exercise',
+        complete: false
+      }
+    ];
+    
+
+    $('#submit-button').on('click', function () {
+      var submitTask = $('#task-input').val();
+      var submitComplete = $('#complete-input').val();
+      var submittedInfo = {name: submitTask, complete: submitComplete};
+      tasks.push(submittedInfo);
+      renderTasks();
+    });
+    
+    // $(document).on('change', '.checkbox', function (e) {
+    //   $('.checkbox').parent();
+    //   $('#to-do-list').index(tasks[i]);
+    // });
+
+// http://www.hscripts.com/tutorials/javascript/dom/checkbox-events.php
+// Can I use this to remove the tasks where complete= true?
+// function removeValue(arr, value) {
+//     for(var i = 0; i < arr.length; i++) {
+//         if(arr[1] === value) {
+//             return arr.splice(i, 1);
+//         }
+//     }
+// }
+// If complete==false, append checkbox. Then, when check event happens, 
+
+    var renderTasks = function() {
+      $('#to-do-list').empty();
+      for (i=0; i<tasks.length; i+=1){
+        var newTaskHtml = taskTemplate(tasks[i]);
+        
+        $('#to-do-list').append(newTaskHtml);
+      }
+    };
+
+    renderTasks();
+
+    </script>
+  </body>
+  </html>
+
