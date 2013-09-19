@@ -69,10 +69,11 @@
       renderTasks();
     });
     
-    // $(document).on('change', '.checkbox', function (e) {
-    //   $('.checkbox').parent();
-    //   $('#to-do-list').index(tasks[i]);
-    // });
+    $(document).on('change', '.checkbox', function (e) {
+      // this refers to checkbox
+      tasks[$(this).parent().parent().index()].complete = "complete";
+      renderTasks();
+    });
 
 // http://www.hscripts.com/tutorials/javascript/dom/checkbox-events.php
 // Can I use this to remove the tasks where complete= true?
